@@ -5,7 +5,6 @@ const express = require('express'),
 
 const app = express();
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), { flags: 'a' });
-
 app.use(morgan('combined', { stream: accessLogStream }));
 
 app.get('/', (req, res) => {
