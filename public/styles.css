@@ -1,0 +1,34 @@
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-family: "Verdana", "Geneva", "Tahoma", "sans-serif";
+    background-color:hsl(0, 0%, 96%);
+    color: hsl(0, 2%, 12%);
+}
+
+pre code {
+    display: block;
+    background: none;
+    white-space: pre;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: scroll;
+    max-width: 100%;
+    min-width: 100px;
+    padding: 0;
+  }
+
+table {
+    border: 1px solid gray;
+}
+
+th {
+    color: hsl(300, 100%, 25%);
+    border: 1px solid gray;
+}
+
+td {
+    color: hsl(265, 51%, 45%);
+    border: 1px solid gray;
+}

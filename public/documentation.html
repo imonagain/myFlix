@@ -1,2 +1,125 @@
-<h1>Achievement 2 Documentation</h1>
-Objective of project is to build the server-side component of a movies web application. Web app will provide users with access to information about different movies, directors, and genres
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css" />
+    <title>myFlix REST API Documentation</title>
+</head>
+
+<body>
+    <h1>myFlix Documentation</h1>
+    <table>
+        <thead>
+            <tr>
+                <th class="col">ID</th>
+                <th class="col">Request</th>
+                <th class="col">URL</th>
+                <th class="col">HTTP Method</th>
+                <th class="col">Request</th>
+                <th class="col">Response</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th class="row">1</th>
+                <td>Get a list of all movies</td>
+                <td>/movies</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>A JSON object with complete movie list</td>
+            </tr>
+            <tr>
+                <th class="row">2</th>
+                <td>Return data on movie</td>
+                <td>/movies/[title]</td>
+                <td>GET</td>
+                <td>None</td>
+                <td> Text message stating "Successful GET request returning title of movie"</td>
+            </tr>
+            <tr>
+                <th class="row">3</th>
+                <td>Return genre by name</td>
+                <td>/movies/genre/[genreName]</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>Text message stating "Successful GET request returning genre of movie"
+                </td>
+            </tr>
+            <tr>
+                <th class="row">4</th>
+                <td>Return director's name</td>
+                <td>/movies/directors/[directors]</td>
+                <td>GET</td>
+                <td>None</td>
+                <td>Text message stating "Successful GET request returning name of director"
+                </td>
+            </tr>
+            <tr>
+                <th class="row">5</th>
+                <td>Create new user</td>
+                <td>/users</td>
+                <td>POST</td>
+                <td>JSON object holding
+                    new user information:<br>
+                    {<br>
+                    username : "theatergeek76",<br>
+                    favoriteMovies=[]<br>
+                    }<br>
+                </td>
+                <td>Text message stating "Successful POST request adding new users"
+                </td>
+            </tr>
+            <tr>
+                <th class="row">6</th>
+                <td>Update username</td>
+                <td>/users/[id]</td>
+                <td>PUT</td>
+                <td>JSON object holding data to update. Example:<br>
+                    {<br>
+                    "username":"dccomics099"<br>
+                    }<br>
+                </td>
+                <td>Text message stating "Successful PUT request updating new users info"
+                </td>
+            </tr>
+            <tr>
+                <th class="row">7</th>
+                <td>Add movie to favorites list of user</td>
+                <td>/users/[id]/[title]</td>
+                <td>POST</td>
+                <td>None</td>
+                <td>Text message stating "Successful POST request updating users favorite movies"</td>
+            </tr>
+            <tr>
+                <th class="row">8</th>
+                <td>Remove a movie from list of favourites</td>
+                <td>/users/[id]/[title]</td>
+                <td>DELETE</td>
+                <td>JSON object with title of movie to be removed. Example:
+                    <br>{
+                        <br>"title": "The Avengers"
+                        <br>}
+                </td>
+                <td>Text message stating "Successful DELETE request to remove movie from users list"</td>
+            </tr>
+            <tr>
+                <th class="row">9</th>
+                <td>Remove user</td>
+                <td>/users/id</td>
+                <td>DELETE</td>
+                <td>JSON object with username of user to remove in 
+                    <br>{
+                    <br>"username": "marvel123"
+                    <br>}
+                </td>
+                <td>Text message: "Successful DELETE request to remove user"</td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+</html>
