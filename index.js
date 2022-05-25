@@ -34,80 +34,90 @@ const movies = [
         "id": "1",
         "title": "My Neighbor Totoro",
         "director": "Hayao Miyazaki",
-        "genre": ["Family", "Fantasy", "Animation"],
-        "year": "1988"
+        "genre": "Fantasy",
+        "year": "1988",
+        "description": "When two girls move to the country to be near their ailing mother, they have adventures with the wondrous forest spirits who live nearby."
     },
 
     {
         "id": "2",
         "title": "Amelie",
         "director": "Jean-Pierre Jeunet",
-        "genre": ["Romance", "Comedy"],
-        "year": "2001"
+        "genre": "Romance",
+        "year": "2001",
+        "description": "Amélie is an innocent and naive girl in Paris with her own sense of justice. She decides to help those around her and, along the way, discovers love."
     },
 
     {
         "id": "3",
         "title": "Inception",
         "director": "Christopher Nolan",
-        "genre": ["Science-Fiction", "Action", "Adventure"],
-        "year": "2010"
+        "genre": "Science-Fiction",
+        "year": "2010",
+        "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster."
     },
 
     {
         "id": "4",
         "title": "Knives Out",
         "director": "Rian Johnson",
-        "genre": ["Comedy", "Mystery", "Crime"],
-        "year": "2019"
+        "genre": "Mystery",
+        "year": "2019",
+        "description": "A detective investigates the death of the patriarch of an eccentric, combative family."
     },
 
     {
         "id": "5",
         "title": "Little Women",
         "director": "Greta Gerwig",
-        "genre": ["Drama", "Romance"],
-        "year": "2019"
+        "genre": "Drama",
+        "year": "2019",
+        "description": "Jo March reflects back and forth on her life, telling the beloved story of the March sisters - four young women, each determined to live life on her own terms."
     },
 
     {
         "id": "6",
         "title": "Moana",
         "director": "Ron Clements",
-        "genre": ["Comedy", "Adventure", "Animation", "Family"],
-        "year": "2016"
+        "genre": "Adventure",
+        "year": "2016",
+        "description": "In Ancient Polynesia, when a terrible curse incurred by the Demigod Maui reaches Moana's island, she answers the Ocean's call to seek out the Demigod to set things right."
     },
 
     {
         "id": "7",
         "title": "Pride & Prejudice",
         "director": "Joe Wright",
-        "genre": ["Drama", "Romance"],
-        "year": "2005"
+        "genre": "Drama",
+        "year": "2005",
+        "description": "Sparks fly when spirited Elizabeth Bennet meets single, rich, and proud Mr. Darcy. But Mr. Darcy reluctantly finds himself falling in love with a woman beneath his class. Can each overcome their own pride and prejudice?"
     },
 
     {
         "id": "8",
         "title": "Tangled",
         "director": "Byron Howard",
-        "genre": ["Family", "Animation"],
-        "year": "2010"
+        "genre": "Family",
+        "year": "2010",
+        "description": "The magically long-haired Rapunzel has spent her entire life in a tower, but now that a runaway thief has stumbled upon her, she is about to discover the world for the first time, and who she really is."
     },
 
     {
         "id": "9",
         "title": "(500) Days of Summer",
         "director": "Marc Webb",
-        "genre": ["Drama", "Romance", "Comedy"],
-        "year": "2009"
+        "genre": "Romance",
+        "year": "2009",
+        "description": "After being dumped by the girl he believes to be his soulmate, hopeless romantic Tom Hansen reflects on their relationship to try and figure out where things went wrong and how he can win her back."
     },
 
     {
         "id": "10",
-        "title": "Violet Evergarden: the Movie",
-        "director": "Taichi Ishidate",
-        "genreName": ["Fantasy", "Romance", "Drama", "Animation"],
-        "year": "2020"
+        "title": "Spirited Away",
+        "director": "Hayao Miyazaki",
+        "genreName": "Fantasy",
+        "year": "2001",
+        "description": "During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, and where humans are changed into beasts."
     }];
 
 
@@ -119,7 +129,7 @@ app.get('/movies', (req, res) => {
 
 // Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user
 app.get('/movies/:title', (req, res) => {
-    res.send('Successful GET request returning title of movie')
+    res.send('Successful GET request returning movie data by title')
 })
 
 // Return data about a genre (description) by name/title (e.g., “Thriller”)
