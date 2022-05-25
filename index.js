@@ -113,11 +113,11 @@ const movies = [
 
     {
         "id": "10",
-        "title": "Violet Evergarden: the Movie",
-        "director": "Taichi Ishidate",
+        "title": "Spirited Away",
+        "director": "Hayao Miyazaki",
         "genreName": "Fantasy",
-        "year": "2020",
-        "description": "After the aftermath of a war, a young girl who was used as a 'tool' for war learned to live. With the scars of burns, she goes back to her past to feel the true feelings of the Major's 'I love you.'"
+        "year": "2001",
+        "description": "During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, and where humans are changed into beasts."
     }];
 
 
