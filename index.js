@@ -149,11 +149,7 @@ app.delete('/users/:Username', (req, res) => {
 app.get('/movies/:Title', (req, res) => {
     Movies.find({ Title: req.params.Title })
         .then((movie) => {
-            if (movie) {
-                res.status(200).json(movie);
-            } else {
-                res.status(400).send(req.params.Title + ' does not exist')
-            }
+            res.json(movie);
         })
         .catch((error) => {
             console.error(error);
@@ -166,8 +162,7 @@ app.get('/movies/:Title', (req, res) => {
 app.get('/movies/genre/:Name', (req, res) => {
     Movies.find({ 'Genre.Name': req.body.Name })
         .then((genre) => {
-            res.status(200).json(genre)
-            console.log("Hello World")
+            res.json(genre)
         })
         .catch((error) => {
             console.error(error);
@@ -194,12 +189,10 @@ app.get('/movies/directors/:Name', (req, res) => {
 
 // UPDATE user favorite movies
 // currently returnning null
-app.put('/users/:Username/movies/:MovieID', (req, res) => {
+app.post('/users/:Username/movies/:MovieID', (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username },
         {
-            $push: {
-                FavoriteMovies: req.params.MovieID
-            }
+            $addToSet: { FavoriteMovies: req.params.MovieID }
         },
         { new: true },
         (error, updatedUser) => {
