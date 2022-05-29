@@ -5,12 +5,15 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     uuid = require('uuid'),
     mongoose = require('mongoose'),
-    Models = require('./models');
-// const { rest } = require('lodash');
+    Models = require('./models.js');
 
+//mongoose models
 const Movies = Models.Movie;
 const Users = Models.User;
 
+const app = express();
+
+//connection to mongodb
 mongoose.connect('mongodb://localhost:27017/myFlixDB',
     {
         useNewUrlParser: true,
@@ -20,12 +23,11 @@ mongoose.connect('mongodb://localhost:27017/myFlixDB',
     .catch((error) => console.log(error)
     );
 
-const app = express();
-
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), { flags: 'a' });
 
 app.use(morgan('combined', { stream: accessLogStream }));
 app.use(express.static('public'));
+app.use(express.json());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
@@ -81,7 +83,7 @@ app.post('/users', (req, res) => {
 app.get('/users', (req, res) => {
     Users.find()
         .then((users) => {
-            res.status(201).json(users);
+            res.status(200).json(users);
         })
         .catch((error) => {
             console.error(error);
@@ -150,25 +152,13 @@ app.get('/movies/:Title', (req, res) => {
     Movies.find({ Title: req.params.Title })
         .then((movie) => {
             res.json(movie);
+            console.log("Hello world")
         })
         .catch((error) => {
             console.error(error);
             res.status(500).send('Error: ' + error);
         })
 })
-
-// GET genre by name
-// return all movies
-app.get('/movies/genre/:Name', (req, res) => {
-    Movies.find({ 'Genre.Name': req.body.Name })
-        .then((genre) => {
-            res.json(genre)
-        })
-        .catch((error) => {
-            console.error(error);
-            res.status(500).send('Error: ' + error);
-        });
-});
 
 // GET director info
 // currently "Director Not Found"
@@ -187,7 +177,7 @@ app.get('/movies/directors/:Name', (req, res) => {
         });
 });
 
-// UPDATE user favorite movies
+// UPDATE to add new favorite movie
 // currently returnning null
 app.post('/users/:Username/movies/:MovieID', (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username },
@@ -207,7 +197,7 @@ app.post('/users/:Username/movies/:MovieID', (req, res) => {
 
 // DELETE user favorite movie
 // currently returns null
-app.delete('/users/:Username/movies/:MovieID', (req, res) => {
+app.delete('/users/:Username/favorites/:MovieID', (req, res) => {
     Users.findOneAndRemove({ Username: req.params.UserName },
         {
             $pull:
@@ -215,17 +205,14 @@ app.delete('/users/:Username/movies/:MovieID', (req, res) => {
                 FavoriteMovies: req.params.MovieID
             }
         },
-        { new: true })
-        .then((movie) => {
-            if (!movie) {
-                return res.status(400).send(req.params.Title + ' does not exist')
+        { new: true },
+        (error, updatedUser) => {
+            if (error) {
+                console.error(error);
+                res.status(500).send('Error:' + error)
             } else {
-                return res.status(200).send(req.params.Title + ' was successfully removed')
+                res.json(updatedUser);
             }
-        })
-        .catch((error) => {
-            console.error(error)
-            res.status(500).send('Error: ' + error);
         })
 })
 
