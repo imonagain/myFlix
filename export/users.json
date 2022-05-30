@@ -1,0 +1,6 @@
+{"_id":{"$oid":"62947e2a4c672a19d49a1f24"},"Username":"poohbear15","Password":"orange1","Email":"poohbear@email.com","Birthday":"1975-12-15"}
+{"_id":{"$oid":"62947e2a4c672a19d49a1f25"},"Username":"superpilot","Password":"test123","Email":"superpilot@gmail.com","Birthday":"1987-10-15","FavoriteMovies":[{"$oid":"62947c4c4c672a19d49a1f23"}]}
+{"_id":{"$oid":"62947e2a4c672a19d49a1f26"},"Username":"avengersfan2020","Password":"yellow9","Email":"moonknight22@hotmail.com","Birthday":"2001-07-04","FavoriteMovies":[{"$oid":"62947c4c4c672a19d49a1f23"}]}
+{"_id":{"$oid":"62947e2a4c672a19d49a1f27"},"Username":"candyyman","Password":"lollipop5","Email":"sweettreats@gmail.com","Birthday":"1999-09-20"}
+{"_id":{"$oid":"62947e2a4c672a19d49a1f28"},"Username":"lindabelcher","Password":"christmastree","Email":"ilovebob@gmail.com","Birthday":"1979-06-21","FavoriteMovies":[[{"$oid":"62947bcd4c672a19d49a1f21"},{"$oid":"62947b734c672a19d49a1f1e"},{"$oid":"62947bcd4c672a19d49a1f1f"}]]}
+{"_id":{"$oid":"62947e2a4c672a19d49a1f29"},"Username":"lisasimpson","Password":"maggie02","Email":"bartsucks@gmail.com","Birthday":"2004-01-20","FavoriteMovies":[{"$oid":"62947bcd4c672a19d49a1f21"}]}
