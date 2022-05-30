@@ -1,26 +1,37 @@
+:root {
+    --color-green-700: hsl(120, 24%, 25%);
+    --color-green-500: hsl(120, 23%, 40%);
+    --color-green-300: hsl(120, 23%, 55%);
+    --color-blue--500: hsl(180, 23%, 40%);
+    --color-white-700: hsl(200, 29%, 88%);
+}
+
 * {
     box-sizing: border-box;
 }
 
 html {
     font-family: "Verdana", "Geneva", "Tahoma", "sans-serif";
-    background-color:hsl(0, 0%, 96%);
+    background-color: hsl(0, 0%, 96%);
     color: hsl(0, 2%, 12%);
 }
 
-pre code {
+/* .code {
     display: block;
-    background: none;
     white-space: pre;
-    -webkit-overflow-scrolling: touch;
-    overflow-x: scroll;
-    max-width: 100%;
-    min-width: 100px;
-    padding: 0;
-  }
+    color: hsl(0, 0%, 0%);
+    font-family: Menlo, Monaco, "Courier New", Courier, monospace;
+    font-size: 0.7em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+} */
 
 table {
+    max-width: 1000px;
     border: 1px solid gray;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 th {

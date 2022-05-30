@@ -201,25 +201,23 @@ app.delete('/users/:Username', (req, res) => {
         });
 })
 
-// ================ ERRORS ===========================
-
-// DELETE user favorite movie
-// currently returns error
+// Delete user favoritemovie
 app.delete('/users/:Username/movies/:MovieID', (req, res) => {
-    Users.findOneAndRemove({ Username: req.params.UserName },
+    Users.findOneAndUpdate({ Username: req.params.Username },
         {
-            $pull: { FavoriteMovies: req.params.MovieID }
+            $pull:
+                { FavoriteMovies: req.params.MovieID }
         },
         { new: true },
-        (error, updatedUser) => {
-            if (error) {
-                console.error(error);
-                res.status(500).send('Error:' + error)
+        (err, updatedUser) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
             } else {
-                res.json(updatedUser);
+                res.status(200).json(updatedUser);
             }
-        })
-})
+        });
+});
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
