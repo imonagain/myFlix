@@ -17,6 +17,8 @@ let movieSchema = mongoose.Schema({
     Description: String,
 });
 
+
+
 let userSchema = mongoose.Schema({
     Username: {
         type: String,
@@ -31,10 +33,10 @@ let userSchema = mongoose.Schema({
         required: true
     },
     Birthday: Date,
-    FavoriteMovies: [
-        {
-            type: mongoose.Schema.Types.ObjectId, ref: 'Movie'
-        }]
+    FavoriteMovies: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Movie'
+    }]
 });
 
 let Movie = mongoose.model('Movie', movieSchema);

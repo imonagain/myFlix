@@ -39,7 +39,7 @@
                 <tr>
                     <th class="row">2</th>
                     <td>Return movie information by movie title</td>
-                    <td>/movies/[title]</td>
+                    <td>/movies/:title</td>
                     <td>GET</td>
                     <td>None</td>
                     <td>
@@ -66,7 +66,7 @@
                 <tr>
                     <th class="row">3</th>
                     <td>Return all movies by genre name</td>
-                    <td>/movies/genre/[genreName]</td>
+                    <td>/movies/genre/:name</td>
                     <td>GET</td>
                     <td>None</td>
                     <td>
@@ -84,7 +84,7 @@
                             "_id": ObjectID,<br />
                             "Title": String,<br />
                             "Year": String,<br />
-                            "Description": String
+                            "Description": String<br />
                             }
 
                         </span>
@@ -93,14 +93,25 @@
                 <tr>
                     <th class="row">4</th>
                     <td>Return all movies by director name</td>
-                    <td>/movies/director/[directorName]</td>
+                    <td>/movies/director/:name</td>
                     <td>GET</td>
                     <td>None</td>
                     <td>
-                        JSON object.<br>
+                        JSON object with all movies by director.<br>
                         <span class="code">
-                            {<br>
-
+                            {<br />
+                            "Director": {<br />
+                            "Name": String,<br />
+                            "Bio": String<br />
+                            },<br />
+                            "Genre": {<br />
+                            "Name": String,<br />
+                            "Description": String<br />
+                            },
+                            "_id": ObjectID,<br />
+                            "Title": String,<br />
+                            "Year": String,<br />
+                            "Description": String<br />
                             }
 
                         </span>
@@ -132,73 +143,94 @@
                     <td>Create new user</td>
                     <td>/users</td>
                     <td>POST</td>
-                    <td>JSON object with new user data<br>{<br>
-                        Username: String,<br>
-                        Password: String,<br>
-                        Email: String,<br>
-                        Birthday: Date<br>
-                        }</td>
+                    <td>JSON object with new user data<br>
+                        <span>
+                            {<br>
+                            Username: String,<br>
+                            Password: String,<br>
+                            Email: String,<br>
+                            Birthday: Date<br>
+                            }
+                        </span>
+                    </td>
                     <td>Text message: "User successfully added"
                     </td>
                 </tr>
                 <tr>
                     <th class="row">2</th>
                     <td>Update email</td>
-                    <td>/users/[userName]</td>
+                    <td>/users/:username</td>
                     <td>PUT</td>
                     <td>JSON object holding data to update. Example:<br>
-                        {<br>
-                        "Email": String<br>
-                        }
+                        <span>
+                            {<br>
+                            "Email": String<br>
+                            }
+                        </span>
                     </td>
                     <td>JSON object with new updated information. Example:
-                        {<br>
-                        "Username": String,<br>
-                        "Password": String,<br>
-                        "Email": String,<br>
-                        "Birthday": Date<br>
-                        }
+                        <span>
+                            {<br>
+                            "Username": String,<br>
+                            "Password": String,<br>
+                            "Email": String,<br>
+                            "Birthday": Date<br>
+                            }
                     </td>
+                    </span>
                 </tr>
                 <tr>
                     <th class="row">3</th>
                     <td>Add favorite movie</td>
-                    <td>/users/[userName]/movies/[title]</td>
+                    <td>/users/:username/movies/:title</td>
                     <td>POST</td>
                     <td>None</td>
                     <td>User JSON object with updated favoriteMovies:<br>
-                        {<br />
-                        "_id": ObjectID,<br />
-                        "Username": String,<br />
-                        "Password": String,<br />
-                        "Email": String,<br />
-                        "Birthday": Date,<br />
-                        "FavoriteMovies": [<br />
-                        MovieID<br />
-                        ]
-                        }</td>
+                        <span>
+                            {<br />
+                            "_id": ObjectID,<br />
+                            "Username": String,<br />
+                            "Password": String,<br />
+                            "Email": String,<br />
+                            "Birthday": Date,<br />
+                            "FavoriteMovies": [<br />
+                            MovieID]<br />
+                            }
+                        </span>
+                    </td>
                 </tr>
                 <tr>
                     <th class="row">4</th>
                     <td>Delete user's favorite movie</td>
-                    <td>/users/[userName]/movies/[title]</td>
+                    <td>/users/:Username/movies/:MovieId</td>
                     <td>DELETE</td>
-                    <td>JSON object with title of movie to be removed. Example:
-                        <br>{
-                        <br>"title": "The Avengers"
-                        <br>}
+                    <td>None
                     </td>
-                    <td>Text message: "Movie successfully deleted"</td>
+                    <td>User JSON object with updated favoriteMovies:<br>
+                        <span>
+                            {<br />
+                            "_id": ObjectID,<br />
+                            "Username": String,<br />
+                            "Password": String,<br />
+                            "Email": String,<br />
+                            "Birthday": Date,<br />
+                            "FavoriteMovies": [<br />
+                            MovieID<br />
+                        </span>
+                        ]
+                    </td>
                 </tr>
                 <tr>
                     <th class="row">5</th>
                     <td>Delete user</td>
-                    <td>/users/[userName]</td>
+                    <td>/users/:userName</td>
                     <td>DELETE</td>
                     <td>JSON object with username of user to remove in
-                        <br>{
-                        <br>"username": "marvel123"
-                        <br>}
+                        <span>
+                            <br>{
+                            <br>"username": "marvel123"
+                            <br>}
+                        </span>
                     </td>
                     <td>Text message: "User successfully deleted"</td>
                 </tr>

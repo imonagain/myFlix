@@ -16,6 +16,10 @@ html {
     color: hsl(0, 2%, 12%);
 }
 
+span {
+    font-size: 12px;
+}
+
 /* .code {
     display: block;
     white-space: pre;

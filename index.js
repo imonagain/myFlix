@@ -202,11 +202,11 @@ app.delete('/users/:Username', (req, res) => {
 })
 
 // Delete user favoritemovie
-app.delete('/users/:Username/movies/:MovieID', (req, res) => {
+app.delete('/users/:Username/movies/:MovieId', (req, res) => {
     Users.findOneAndUpdate({ Username: req.params.Username },
         {
             $pull:
-                { FavoriteMovies: req.params['MovieID'] }
+                { FavoriteMovies: req.params.MovieId }
         },
         { new: true },
         (err, updatedUser) => {
