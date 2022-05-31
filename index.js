@@ -3,171 +3,221 @@ const express = require('express'),
     fs = require('fs'),
     path = require('path'),
     bodyParser = require('body-parser'),
-    uuid = require('uuid')
+    uuid = require('uuid'),
+    mongoose = require('mongoose'),
+    Models = require('./models.js');
+
+//mongoose models
+const Movies = Models.Movie;
+const Users = Models.User;
 
 const app = express();
-app.use(bodyParser.json());
 
+//connection to mongodb
+mongoose.connect('mongodb://localhost:27017/myFlixDB',
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then(() => console.log('MongoDB Connected...'))
+    .catch((error) => console.log(error)
+    );
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), { flags: 'a' });
+
 app.use(morgan('combined', { stream: accessLogStream }));
+app.use(express.static('public'));
+app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
     res.send('Welcome to myFlix!');
 });
 
-const users = [
-    {
-        "id": "1",
-        "username": "moviefan01",
-        "favoriteMovies": []
-    },
-    {
-        "id": "2",
-        "username": "marvel123",
-        "favoriteMovies": ["The Avengers"]
-    }
-]
-
-const movies = [
-    {
-        "id": "1",
-        "title": "My Neighbor Totoro",
-        "director": "Hayao Miyazaki",
-        "genre": "Fantasy",
-        "year": "1988",
-        "description": "When two girls move to the country to be near their ailing mother, they have adventures with the wondrous forest spirits who live nearby."
-    },
-
-    {
-        "id": "2",
-        "title": "Amelie",
-        "director": "Jean-Pierre Jeunet",
-        "genre": "Romance",
-        "year": "2001",
-        "description": "Amélie is an innocent and naive girl in Paris with her own sense of justice. She decides to help those around her and, along the way, discovers love."
-    },
-
-    {
-        "id": "3",
-        "title": "Inception",
-        "director": "Christopher Nolan",
-        "genre": "Science-Fiction",
-        "year": "2010",
-        "description": "A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O., but his tragic past may doom the project and his team to disaster."
-    },
-
-    {
-        "id": "4",
-        "title": "Knives Out",
-        "director": "Rian Johnson",
-        "genre": "Mystery",
-        "year": "2019",
-        "description": "A detective investigates the death of the patriarch of an eccentric, combative family."
-    },
-
-    {
-        "id": "5",
-        "title": "Little Women",
-        "director": "Greta Gerwig",
-        "genre": "Drama",
-        "year": "2019",
-        "description": "Jo March reflects back and forth on her life, telling the beloved story of the March sisters - four young women, each determined to live life on her own terms."
-    },
-
-    {
-        "id": "6",
-        "title": "Moana",
-        "director": "Ron Clements",
-        "genre": "Adventure",
-        "year": "2016",
-        "description": "In Ancient Polynesia, when a terrible curse incurred by the Demigod Maui reaches Moana's island, she answers the Ocean's call to seek out the Demigod to set things right."
-    },
-
-    {
-        "id": "7",
-        "title": "Pride & Prejudice",
-        "director": "Joe Wright",
-        "genre": "Drama",
-        "year": "2005",
-        "description": "Sparks fly when spirited Elizabeth Bennet meets single, rich, and proud Mr. Darcy. But Mr. Darcy reluctantly finds himself falling in love with a woman beneath his class. Can each overcome their own pride and prejudice?"
-    },
-
-    {
-        "id": "8",
-        "title": "Tangled",
-        "director": "Byron Howard",
-        "genre": "Family",
-        "year": "2010",
-        "description": "The magically long-haired Rapunzel has spent her entire life in a tower, but now that a runaway thief has stumbled upon her, she is about to discover the world for the first time, and who she really is."
-    },
-
-    {
-        "id": "9",
-        "title": "(500) Days of Summer",
-        "director": "Marc Webb",
-        "genre": "Romance",
-        "year": "2009",
-        "description": "After being dumped by the girl he believes to be his soulmate, hopeless romantic Tom Hansen reflects on their relationship to try and figure out where things went wrong and how he can win her back."
-    },
-
-    {
-        "id": "10",
-        "title": "Spirited Away",
-        "director": "Hayao Miyazaki",
-        "genreName": "Fantasy",
-        "year": "2001",
-        "description": "During her family's move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, and where humans are changed into beasts."
-    }];
-
-
-// Return list of movies
+// GET complete list of movies
 app.get('/movies', (req, res) => {
-    // res.send('Successful GET request returning complete list of movies')
-    res.status(201).json(movies);
+    Movies.find()
+        .then((movies) => {
+            res.status(200).json(movies);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send('Error: ' + err);
+        })
 });
 
-// Return data (description, genre, director, image URL, whether it’s featured or not) about a single movie by title to the user
-app.get('/movies/:title', (req, res) => {
-    res.send('Successful GET request returning movie data by title')
-})
+// GET movie info by title
+app.get('/movies/:Title', (req, res) => {
+    Movies.find({ Title: req.params.Title })
+        .then((movie) => {
+            res.json(movie);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Error: ' + error);
+        })
+});
 
-// Return data about a genre (description) by name/title (e.g., “Thriller”)
-app.get('/movies/genre/:genreName', (req, res) => {
-    res.send('Successful GET request returning genre of movie')
-})
+// GET movie info by director name
+app.get('/movies/director/:Name', (req, res) => {
+    Movies.find({ 'Director.Name': req.params.Name })
+        .then((director) => {
+            if (director) {
+                res.status(201).json(director);
+            } else {
+                res.status(400).send('Director Not Found')
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Error: ' + error);
+        });
+});
 
-// Return data about a director (bio, birth year, death year) by name
-app.get('/movies/directors/:director', (req, res) => {
-    res.send('Successful GET request returning name of director')
-})
+// GET movie info by genre name
+app.get('/movies/genre/:Name', (req, res) => {
+    Movies.find({ 'Genre.Name': req.params.Name })
+        .then((genre) => {
+            if (genre) {
+                res.status(201).json(genre);
+            } else {
+                res.status(400).send('No such genre')
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Error: ' + error);
+        });
+});
 
-// Allow new users to register
+
+// POST new user
 app.post('/users', (req, res) => {
-    res.send('Successful POST request adding new users')
+    Users.findOne({ Username: req.body.Username })
+        .then((user) => {
+            if (user) {
+                return res.status(400).send(req.body.Username + ' already exists');
+            } else {
+                Users
+                    .create({
+                        Username: req.body.Username,
+                        Password: req.body.Password,
+                        Email: req.body.Email,
+                        Birthday: req.body.Birthday
+                    })
+                    .then((user) => {
+                        res.status(201).json(user)
+                    })
+                    .catch((error) => {
+                        console.error(error);
+                        res.status(500).send('Error: ' + error);
+                    })
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Error: ' + error);
+        });
+});
+
+// GET list of all users
+app.get('/users', (req, res) => {
+    Users.find()
+        .then((users) => {
+            res.status(200).json(users);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Error: ' + error);
+        });
+});
+
+// GET USER INFO BY USERNAME
+app.get('/users/:Username', (req, res) => {
+    Users.findOne({ Username: req.params.Username })
+        .then((user) => {
+            res.json(user);
+        })
+        .catch((error) => {
+            console.error(error);
+            res.status(500).send('Error: ' + error);
+        });
+});
+
+// UPDATE USER INFO
+app.put('/users/:Username', (req, res) => {
+    Users.findOneAndUpdate({ Username: req.params.Username },
+        {
+            $set:
+            {
+                Username: req.body.Username,
+                Password: req.body.Password,
+                Email: req.body.Email,
+                Birthday: req.body.Birthday
+            }
+        },
+        { new: true },
+        (error, updatedUser) => {
+            if (error) {
+                console.error(error);
+                res.status(500).send('Error: ' + error);
+            } else {
+                res.json(updatedUser);
+            }
+        });
+});
+
+// UPDATE add new favorite movie
+app.post('/users/:Username/movies/:MovieID', (req, res) => {
+    Users.findOneAndUpdate({ Username: req.params.Username },
+        {
+            $push: { FavoriteMovies: req.params.MovieID }
+        },
+        { new: true },
+        (error, updatedUser) => {
+            if (error) {
+                console.error(error);
+                res.status(500).send('Error: ' + error);
+            } else {
+                res.json(updatedUser);
+            }
+        });
+});
+
+// DELETE existing user
+app.delete('/users/:Username', (req, res) => {
+    Users.findOneAndRemove({ Username: req.params.Username })
+        .then((user) => {
+            if (!user) {
+                return res.status(400).send(req.params.Username + ' does not exist');
+            } else {
+                res.status(200).send(req.params.Username + ' was successfully deleted');
+            }
+        })
+        .catch((error) => {
+            console.error(error)
+            res.status(500).send('Error: ' + error);
+        });
 })
 
-// Edit user information
-app.put('/users/:id', (req, res) => {
-    res.send('Successful PUT request updating new users info')
-})
-
-// Add movie to users favorites list
-app.post('/users/:id/:favoriteMovies', (req, res) => {
-    res.send('Successful POST request updating users favorite movies')
-})
-
-// Delete movie from users favorite movies
-app.delete('/users/:id/:title', (req, res) => {
-    res.send('Successful DELETE request to remove movie from users list')
-})
-
-// Delete existing user
-app.delete('/users/:id', (req, res) => {
-    res.send('Successful DELETE request to remove user')
-})
-
-app.use(express.static('public'));
+// Delete user favoritemovie
+app.delete('/users/:Username/movies/:MovieId', (req, res) => {
+    Users.findOneAndUpdate({ Username: req.params.Username },
+        {
+            $pull:
+                { FavoriteMovies: req.params.MovieId }
+        },
+        { new: true },
+        (err, updatedUser) => {
+            if (err) {
+                console.error(err);
+                res.status(500).send('Error: ' + err);
+            } else {
+                res.status(200).json(updatedUser);
+            }
+        });
+});
 
 app.use((err, req, res, next) => {
     console.error(err.stack);
