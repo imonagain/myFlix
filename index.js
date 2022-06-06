@@ -1,5 +1,5 @@
 const express = require('express'),
-    // dotenv = require('dotenv'),
+    dotenv = require('dotenv'),
     morgan = require('morgan'),
     fs = require('fs'),
     path = require('path'),
@@ -8,7 +8,7 @@ const express = require('express'),
     mongoose = require('mongoose'),
     Models = require('./models.js');
 
-// dotenv.config({ path: '.env' });
+dotenv.config({ path: '.env' });
 
 const { check, validationResult } = require('express-validator');
 
