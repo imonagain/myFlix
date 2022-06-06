@@ -16,7 +16,16 @@ const Users = Models.User;
 const app = express();
 
 //connection to mongodb
-mongoose.connect('mongodb://localhost:27017/myFlixDB',
+// mongoose.connect('mongodb://localhost:27017/myFlixDB',
+//     {
+//         useNewUrlParser: true,
+//         useUnifiedTopology: true
+//     })
+//     .then(() => console.log('MongoDB Connected...'))
+//     .catch((error) => console.log(error)
+//     );
+
+mongoose.connect(process.env.CONNECTION_URI,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -274,3 +283,5 @@ const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
     console.log('Listening on Port ' + port);
 });
+
+

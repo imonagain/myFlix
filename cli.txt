@@ -1,0 +1,4 @@
+mongosh "mongodb+srv://ohmymovies.ninxph5.mongodb.net/myFlixDB" --apiVersion 1 --username ohmymoviesadmin
+
+
+mongodb+srv://ohmymoviesadmin:gpEzFkA3KZlVbb6k@ohmymovies.ninxph5.mongodb.net/myFlixDB?retryWrites=true&w=majority
