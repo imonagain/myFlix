@@ -28,7 +28,7 @@ const app = express();
 //     .catch((error) => console.log(error)
 //     );
 
-mongoose.connect(process.env.CONNECTION_URI,
+mongoose.connect('mongodb+srv://ohmymoviesadmin:gpEzFkA3KZlVbb6k@ohmymovies.ninxph5.mongodb.net/myFlixDB?retryWrites=true&w=majority',
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -286,5 +286,3 @@ const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
     console.log('Listening on Port ' + port);
 });
-
-
