@@ -28,7 +28,7 @@ const app = express();
 //     .catch((error) => console.log(error)
 //     );
 
-mongoose.connect('mongodb+srv://ohmymoviesadmin:gpEzFkA3KZlVbb6k@ohmymovies.ninxph5.mongodb.net/myFlixDB?retryWrites=true&w=majority',
+mongoose.connect(process.env.CONNECTION_URI,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
