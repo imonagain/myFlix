@@ -19,16 +19,7 @@ const Users = Models.User;
 const app = express();
 
 //connection to mongodb
-// mongoose.connect('mongodb://localhost:27017/myFlixDB',
-//     {
-//         useNewUrlParser: true,
-//         useUnifiedTopology: true
-//     })
-//     .then(() => console.log('MongoDB Connected...'))
-//     .catch((error) => console.log(error)
-//     );
-
-mongoose.connect(process.env.CONNECTION_URI,
+mongoose.connect(process.env.CONNECTION_URI || "mongodb://localhost:27017/myFlixDB",
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
@@ -58,7 +49,7 @@ app.get('/', (req, res) => {
 
 // GET complete list of movies
 app.get('/movies',
-    // passport.authenticate('jwt', { session: false }), 
+    passport.authenticate('jwt', { session: false }),
     (req, res) => {
         Movies.find()
             .then((movies) => {
@@ -191,7 +182,7 @@ app.put('/users/:Username',
         check('Password', 'Password is required').not().isEmpty(),
         check('Email', 'Email does not appear to be valid').isEmail()
     ],
-    // passport.authenticate('jwt', { session: false }), 
+    passport.authenticate('jwt', { session: false }),
 
     (req, res) => {
 
