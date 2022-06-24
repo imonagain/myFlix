@@ -114,7 +114,7 @@ app.post('/users',
         check('Password', 'Password is required').not().isEmpty(),
         check('Email', 'Email does not appear to be valid').isEmail()
     ],
-    // passport.authenticate('jwt', { session: false }), 
+    passport.authenticate('jwt', { session: false }),
     (req, res) => {
         let errors = validationResult(req);
 
@@ -270,10 +270,6 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).send('Whoops, you took a wrong turn');
 });
-
-// app.listen(8080, () => {
-//     console.log('Your app is listening on port 8080.');
-// });
 
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0', () => {
